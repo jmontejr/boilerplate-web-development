@@ -1,0 +1,13 @@
+{
+  "name": "boilerplate_gulp",
+  "version": "1.0.0",
+  "description": "Boilerplate using Gulp to web development",
+  "main": "gulpfile.js",
+  "scripts": {
+    "clean": "gulp clean",
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "author": "jmontejr",
+  "license": "ISC"
+}
