@@ -14,6 +14,7 @@ const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const { gifsicle, mozjpeg, optipng, svgo } = imagemin;
 const cache = require('gulp-cache');
+const fileinclude = require('gulp-file-include');
 
 const pathExists = require('path-exists');
 const INIT_PATH = './src';
@@ -29,6 +30,10 @@ const PATHS = {
         ]
     },
     html: `${INIT_PATH}/*.html`,
+    include: [
+        `${INIT_PATH}/includes/*.html`,
+        `${INIT_PATH}/includes/*/*.html`
+    ],
     images: [
         `${INIT_PATH}/assets/images/*.*`,
         `${INIT_PATH}/assets/images/*/*.*`,
@@ -79,6 +84,9 @@ function sass() {
 
 function html() {
     return src(PATHS.html)
+        .pipe(fileinclude({
+            prefix: '@@'
+        }))
         .pipe(htmlmin({ collapseWhitespace: true }))
         .on('error', swallowError)
         .pipe(dest(DEST_PATH));

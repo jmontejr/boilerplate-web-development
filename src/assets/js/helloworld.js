@@ -1,6 +1,6 @@
-const message = 'Hello World';
+const message = 'Seja bem-vindo(a)!';
 
 const insertMessageInHTML = () => {
-    const elementHello = document.querySelector('#hello')
-    elementHello.innerText = message;
+    const elementMessage = document.querySelector('#hello')
+    elementMessage.innerText = message;
 }

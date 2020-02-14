@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/css/style.min.css">
-</head>
+@@include("./includes/head.html")
 <body>
-    <h1 id="hello"></h1>
-    <script src="assets/js/index.min.js"></script>
+    @@include("./includes/header.html")
+    
+    <ul>
+        @@loop("./includes/list.html", [
+            {"item":"Gulp 4"}, 
+            {"item":"Sass"}, 
+            {"item":"Browserify"}, 
+            {"item":"Git Husky"}
+        ])
+    </ul>
+    
+    @@include("./includes/footer.html")
 </body>
 </html>
