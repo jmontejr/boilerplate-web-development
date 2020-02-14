@@ -4,9 +4,18 @@
   "description": "Boilerplate using Gulp 4 to web development",
   "main": "gulpfile.js",
   "scripts": {
+    "lint": "eslint ./src/assets/js",
+    "lint:fix": "eslint ./src/assets/js --fix",
     "clean": "gulp clean",
     "dev": "gulp dev",
-    "build": "gulp build"
+    "prebuild": "npm run lint",
+    "build": "gulp build",
+    "postbuild": "browserify ./dist/assets/js/index.min.js -o ./dist/assets/js/index.min.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "author": "jmontejr",
   "license": "ISC",
@@ -16,7 +25,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.4",
+    "browserify": "^16.5.0",
     "cssnano": "^4.1.10",
+    "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-cache": "^1.1.3",
     "gulp-clean": "^0.4.0",
@@ -28,6 +39,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
+    "husky": "^4.2.3",
     "uglify-es": "^3.3.9"
   }
 }

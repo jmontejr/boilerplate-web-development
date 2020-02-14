@@ -20,11 +20,38 @@ const INIT_PATH = './src';
 const DEST_PATH = './dist';
 const MAP_PATH = '.'
 
+const PATHS = {
+    sass: {
+        task: `${INIT_PATH}/assets/scss/style.scss`,
+        watch: [
+            `${INIT_PATH}/assets/scss/*.scss`,
+            `${INIT_PATH}/assets/scss/*/*.scss`
+        ]
+    },
+    html: `${INIT_PATH}/*.html`,
+    images: [
+        `${INIT_PATH}/assets/images/*.*`,
+        `${INIT_PATH}/assets/images/*/*.*`,
+        `${INIT_PATH}/assets/images/*/*/*.*`
+    ],
+    fonts: [
+        `${INIT_PATH}/assets/fonts/*.*`,
+        `${INIT_PATH}/assets/fonts/*/*.*`,
+        `${INIT_PATH}/assets/fonts/*/*.*.*`
+    ],
+    scripts: [
+        `${INIT_PATH}/assets/js/*.js`,
+        `${INIT_PATH}/assets/js/*.*.js`,
+        `${INIT_PATH}/assets/js/*/*.js`,
+        `${INIT_PATH}/assets/js/*/*.*.js`,
+    ]
+};
+
 
 // Swallow error
 function swallowError(error) {
     console.log(error.toString());
-    this.emit("end");
+    this.emit('end');
 }
 
 // Clean dist
@@ -40,29 +67,25 @@ function sass() {
         cssnano()
     ];
 
-    return src(`${INIT_PATH}/assets/scss/style.scss`)
+    return src(PATHS.sass.task)
         .pipe(sourcemaps.init())
         .pipe(gsass())
         .on('error', swallowError)
         .pipe(postcss(plugins))
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write(MAP_PATH))
-        .pipe(dest(`${DEST_PATH}/css`));
+        .pipe(dest(`${DEST_PATH}/assets/css`));
 }
 
 function html() {
-    return src(`${INIT_PATH}/index.html`)
+    return src(PATHS.html)
         .pipe(htmlmin({ collapseWhitespace: true }))
         .on('error', swallowError)
         .pipe(dest(DEST_PATH));
 }
 
 function image() {
-    return src([
-        `${INIT_PATH}/images/*.*`,
-        `${INIT_PATH}/images/*/*.*`,
-        `${INIT_PATH}/images/*/*/*.*`
-    ])
+    return src(PATHS.images)
         .pipe(cache(imagemin([
             gifsicle({ interlaced: true }),
             mozjpeg({ quality: 75, progressive: true }),
@@ -75,47 +98,31 @@ function image() {
             })
         ])))
         .on('error', swallowError)
-        .pipe(dest(`${DEST_PATH}/images`));
+        .pipe(dest(`${DEST_PATH}/assets/images`));
 }
 
 function fonts() {
-    return src([
-        `${INIT_PATH}/assets/fonts/*.*`,
-        `${INIT_PATH}/assets/fonts/*/*.*`,
-        `${INIT_PATH}/assets/fonts/*/*.*.*`
-    ])
-        .pipe(dest(`${DEST_PATH}/fonts`));
+    return src(PATHS.fonts)
+        .pipe(dest(`${DEST_PATH}/assets/fonts`));
 }
 
 function scripts() {
-    return src([
-        `${INIT_PATH}/assets/js/*.js`,
-        `${INIT_PATH}/assets/js/*.*.js`
-    ])
+    return src(PATHS.scripts)
+        .pipe(sourcemaps.init())
         .pipe(concat('index.js'))
         .pipe(uglify())
         .on('error', swallowError)
         .pipe(rename({ suffix: '.min' }))
-        .pipe(dest(`${DEST_PATH}/js`));
+        .pipe(sourcemaps.write(MAP_PATH))
+        .pipe(dest(`${DEST_PATH}/assets/js`));
 }
 
 // Watch files
 function watchFiles() {
-    watch([
-        `${INIT_PATH}/assets/scss/*.scss`,
-        `${INIT_PATH}/assets/scss/*/*.scss`
-    ], sass);
-    watch([
-        `${INIT_PATH}/assets/images/*.*`,
-        `${INIT_PATH}/assets/images/*/*.*`
-    ], image);
-    watch(`${INIT_PATH}`, html);
-    watch([
-        `${INIT_PATH}/assets/js/*.js`,
-        `${INIT_PATH}/assets/js/*.*.js`,
-        `${INIT_PATH}/assets/js/*/*.js`,
-        `${INIT_PATH}/assets/js/*/*.*.js`,
-    ], scripts);
+    watch(PATHS.sass.watch, sass);
+    watch(PATHS.images, image);
+    watch(PATHS.html, html);
+    watch(PATHS.scripts, scripts);
 }
 
 // define complex tasks
