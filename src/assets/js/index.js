@@ -1,1 +1,1 @@
-insertMessageInHTML();
+insertMessageOnHTML();

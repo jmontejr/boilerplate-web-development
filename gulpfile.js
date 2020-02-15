@@ -1,26 +1,21 @@
 const { src, dest, watch, series, parallel } = require('gulp');
-const gclean = require('gulp-clean');
-const gsass = require('gulp-sass');
-const cssnano = require('cssnano');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const uglifyes = require('uglify-es');
-const composer = require('gulp-uglify/composer');
-const uglify = composer(uglifyes, console);
-const concat = require('gulp-concat');
-const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
-const htmlmin = require('gulp-htmlmin');
-const imagemin = require('gulp-imagemin');
-const { gifsicle, mozjpeg, optipng, svgo } = imagemin;
-const cache = require('gulp-cache');
 const fileinclude = require('gulp-file-include');
+const $ = require('gulp-load-plugins')();
+const { gifsicle, mozjpeg, optipng, svgo } = $.imagemin;
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const composer = require('gulp-uglify/composer');
+const uglifyes = require('uglify-es');
+const uglify = composer(uglifyes, console);
 
 const pathExists = require('path-exists');
 const INIT_PATH = './src';
 const DEST_PATH = './dist';
-const MAP_PATH = '.'
-
+const SOURCE_MAP_PATH = '.'
 const PATHS = {
     sass: {
         task: `${INIT_PATH}/assets/scss/style.scss`,
@@ -52,7 +47,6 @@ const PATHS = {
     ]
 };
 
-
 // Swallow error
 function swallowError(error) {
     console.log(error.toString());
@@ -62,7 +56,7 @@ function swallowError(error) {
 // Clean dist
 function cleanDist() {
     return src(DEST_PATH)
-        .pipe(gclean());
+        .pipe($.clean());
 }
 
 // Task functions
@@ -73,28 +67,29 @@ function sass() {
     ];
 
     return src(PATHS.sass.task)
-        .pipe(sourcemaps.init())
-        .pipe(gsass())
+        .pipe($.sourcemaps.init())
+        .pipe($.sass())
         .on('error', swallowError)
-        .pipe(postcss(plugins))
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(sourcemaps.write(MAP_PATH))
+        .pipe($.postcss(plugins))
+        .pipe($.rename({ suffix: '.min' }))
+        .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
         .pipe(dest(`${DEST_PATH}/assets/css`));
 }
 
 function html() {
     return src(PATHS.html)
         .pipe(fileinclude({
-            prefix: '@@'
+            prefix: '@@',
+            basepath: '@file'
         }))
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe($.htmlmin({ collapseWhitespace: true }))
         .on('error', swallowError)
         .pipe(dest(DEST_PATH));
 }
 
 function image() {
     return src(PATHS.images)
-        .pipe(cache(imagemin([
+        .pipe($.cache($.imagemin([
             gifsicle({ interlaced: true }),
             mozjpeg({ quality: 75, progressive: true }),
             optipng({ optimizationLevel: 5 }),
@@ -114,15 +109,30 @@ function fonts() {
         .pipe(dest(`${DEST_PATH}/assets/fonts`));
 }
 
+function transpileES() {
+    return browserify({
+        entries: [`${DEST_PATH}/assets/js/index.min.js`]
+    })
+        .transform(babelify.configure({
+            presets: ['@babel/preset-env']
+        }))
+        .bundle()
+        .on('error', swallowError)
+        .pipe(source('index.min.js'))
+        .pipe(buffer())
+        .pipe($.sourcemaps.init())
+        .pipe($.uglify())
+        .on('error', swallowError)
+        .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
+        .pipe(dest(`${DEST_PATH}/assets/js`));
+}
+
 function scripts() {
     return src(PATHS.scripts)
-        .pipe(sourcemaps.init())
-        .pipe(concat('index.js'))
-        .pipe(uglify())
-        .on('error', swallowError)
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(sourcemaps.write(MAP_PATH))
-        .pipe(dest(`${DEST_PATH}/assets/js`));
+        .pipe($.concat('index.js'))
+        .pipe($.rename({ suffix: '.min' }))
+        .pipe(dest(`${DEST_PATH}/assets/js`))
+        .on('finish', transpileES);
 }
 
 // Watch files
