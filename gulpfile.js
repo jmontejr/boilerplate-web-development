@@ -20,8 +20,8 @@ const PATHS = {
     sass: {
         task: `${INIT_PATH}/assets/scss/style.scss`,
         watch: [
-            `${INIT_PATH}/assets/scss/*/*.scss`,
             `${INIT_PATH}/assets/scss/*.scss`,
+            `${INIT_PATH}/assets/scss/*/*.scss`,
         ]
     },
     html: `${INIT_PATH}/*.html`,
@@ -152,6 +152,7 @@ const build = () => {
 
 // export tasks
 exports.clean = clean;
+exports.watch = series(watchFiles);
 exports.dev = series(develop, watchFiles);
 exports.default = develop;
 exports.build = build();

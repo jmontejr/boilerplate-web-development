@@ -1,0 +1,10 @@
+@mixin font-montserrat() {
+    font: {
+        family: $fontMontserrat, $fontSansSerif;
+    }
+}
+@mixin font-lato() {
+    font: {
+        family: $fontLato, $fontSansSerif;
+    }
+}

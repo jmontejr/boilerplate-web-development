@@ -1,0 +1,24 @@
+@font-face {
+    font: {
+        family: $fontMontserrat;
+    }
+    src: url('../fonts/montserrat/Montserrat-Regular.ttf');
+}
+@font-face {
+    font: {
+        family: $fontLato;
+    }
+    src: url('../fonts/lato/Lato-Regular.ttf');
+}
+
+h1 {
+    @include font-montserrat();
+}
+
+h3 {
+    @include font-montserrat();
+}
+
+ul {
+    @include font-lato();
+}
