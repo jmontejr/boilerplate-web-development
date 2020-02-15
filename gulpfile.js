@@ -20,30 +20,30 @@ const PATHS = {
     sass: {
         task: `${INIT_PATH}/assets/scss/style.scss`,
         watch: [
+            `${INIT_PATH}/assets/scss/*/*.scss`,
             `${INIT_PATH}/assets/scss/*.scss`,
-            `${INIT_PATH}/assets/scss/*/*.scss`
         ]
     },
     html: `${INIT_PATH}/*.html`,
     include: [
+        `${INIT_PATH}/includes/*/*.html`,
         `${INIT_PATH}/includes/*.html`,
-        `${INIT_PATH}/includes/*/*.html`
     ],
     images: [
-        `${INIT_PATH}/assets/images/*.*`,
+        `${INIT_PATH}/assets/images/*/*/*.*`,
         `${INIT_PATH}/assets/images/*/*.*`,
-        `${INIT_PATH}/assets/images/*/*/*.*`
+        `${INIT_PATH}/assets/images/*.*`,
     ],
     fonts: [
-        `${INIT_PATH}/assets/fonts/*.*`,
+        `${INIT_PATH}/assets/fonts/*/*.*.*`,
         `${INIT_PATH}/assets/fonts/*/*.*`,
-        `${INIT_PATH}/assets/fonts/*/*.*.*`
+        `${INIT_PATH}/assets/fonts/*.*`,
     ],
     scripts: [
-        `${INIT_PATH}/assets/js/*.js`,
-        `${INIT_PATH}/assets/js/*.*.js`,
-        `${INIT_PATH}/assets/js/*/*.js`,
         `${INIT_PATH}/assets/js/*/*.*.js`,
+        `${INIT_PATH}/assets/js/*/*.js`,
+        `${INIT_PATH}/assets/js/*.*.js`,
+        `${INIT_PATH}/assets/js/*.js`,
     ]
 };
 
@@ -121,7 +121,7 @@ function transpileES() {
         .pipe(source('index.min.js'))
         .pipe(buffer())
         .pipe($.sourcemaps.init())
-        .pipe($.uglify())
+        .pipe(uglify())
         .on('error', swallowError)
         .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
         .pipe(dest(`${DEST_PATH}/assets/js`));
