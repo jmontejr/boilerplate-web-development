@@ -18,32 +18,32 @@ const DEST_PATH = './dist';
 const SOURCE_MAP_PATH = '.'
 const PATHS = {
     sass: {
-        task: `${INIT_PATH}/assets/scss/style.scss`,
+        task: `${ INIT_PATH }/assets/scss/style.scss`,
         watch: [
-            `${INIT_PATH}/assets/scss/*.scss`,
-            `${INIT_PATH}/assets/scss/*/*.scss`,
+            `${ INIT_PATH }/assets/scss/*.scss`,
+            `${ INIT_PATH }/assets/scss/*/*.scss`,
         ]
     },
-    html: `${INIT_PATH}/*.html`,
+    html: `${ INIT_PATH }/*.html`,
     include: [
-        `${INIT_PATH}/includes/*/*.html`,
-        `${INIT_PATH}/includes/*.html`,
+        `${ INIT_PATH }/includes/*/*.html`,
+        `${ INIT_PATH }/includes/*.html`,
     ],
     images: [
-        `${INIT_PATH}/assets/images/*/*/*.*`,
-        `${INIT_PATH}/assets/images/*/*.*`,
-        `${INIT_PATH}/assets/images/*.*`,
+        `${ INIT_PATH }/assets/images/*/*/*.*`,
+        `${ INIT_PATH }/assets/images/*/*.*`,
+        `${ INIT_PATH }/assets/images/*.*`,
     ],
     fonts: [
-        `${INIT_PATH}/assets/fonts/*/*.*.*`,
-        `${INIT_PATH}/assets/fonts/*/*.*`,
-        `${INIT_PATH}/assets/fonts/*.*`,
+        `${ INIT_PATH }/assets/fonts/*/*.*.*`,
+        `${ INIT_PATH }/assets/fonts/*/*.*`,
+        `${ INIT_PATH }/assets/fonts/*.*`,
     ],
     scripts: [
-        `${INIT_PATH}/assets/js/*/*.*.js`,
-        `${INIT_PATH}/assets/js/*/*.js`,
-        `${INIT_PATH}/assets/js/*.*.js`,
-        `${INIT_PATH}/assets/js/*.js`,
+        `${ INIT_PATH }/assets/js/*/*.*.js`,
+        `${ INIT_PATH }/assets/js/*/*.js`,
+        `${ INIT_PATH }/assets/js/*.*.js`,
+        `${ INIT_PATH }/assets/js/*.js`,
     ]
 };
 
@@ -73,7 +73,7 @@ function sass() {
         .pipe($.postcss(plugins))
         .pipe($.rename({ suffix: '.min' }))
         .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
-        .pipe(dest(`${DEST_PATH}/assets/css`));
+        .pipe(dest(`${ DEST_PATH }/assets/css`));
 }
 
 function html() {
@@ -101,17 +101,17 @@ function image() {
             })
         ])))
         .on('error', swallowError)
-        .pipe(dest(`${DEST_PATH}/assets/images`));
+        .pipe(dest(`${ DEST_PATH }/assets/images`));
 }
 
 function fonts() {
     return src(PATHS.fonts)
-        .pipe(dest(`${DEST_PATH}/assets/fonts`));
+        .pipe(dest(`${ DEST_PATH }/assets/fonts`));
 }
 
 function transpileES() {
     return browserify({
-        entries: [`${DEST_PATH}/assets/js/index.min.js`]
+        entries: [`${ DEST_PATH }/assets/js/index.min.js`]
     })
         .transform(babelify.configure({
             presets: ['@babel/preset-env']
@@ -124,14 +124,14 @@ function transpileES() {
         .pipe(uglify())
         .on('error', swallowError)
         .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
-        .pipe(dest(`${DEST_PATH}/assets/js`));
+        .pipe(dest(`${ DEST_PATH }/assets/js`));
 }
 
 function scripts() {
     return src(PATHS.scripts)
         .pipe($.concat('index.js'))
         .pipe($.rename({ suffix: '.min' }))
-        .pipe(dest(`${DEST_PATH}/assets/js`))
+        .pipe(dest(`${ DEST_PATH }/assets/js`))
         .on('finish', transpileES);
 }
 

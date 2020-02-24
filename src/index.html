@@ -1,18 +1,23 @@
 @@include("./includes/head.html")
+
 <body>
-    @@include("./includes/header.html")
-    
-    <ul>
-        @@loop("./includes/list.html", [
-            {"item":"Gulp 4"}, 
-            {"item":"Sass"}, 
-            {"item":"Browserify"}, 
+    <div id="home">
+        @@include("./includes/header.html")
+
+        <ul>
+            @@loop("./includes/list.html", [
+            {"item":"Gulp 4"},
+            {"item":"Sass"},
+            {"item":"Browserify"},
             {"item":"Babelify"},
             {"item":"ESLint"},
             {"item":"Git Husky"}
-        ])
-    </ul>
+            ])
+        </ul>
+
+    </div>
     
     @@include("./includes/footer.html")
 </body>
+
 </html>

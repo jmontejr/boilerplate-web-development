@@ -1,6 +1,6 @@
 class Welcome {
     constructor() {
-        this.message = 'Seja bem vindo(a)!';
+        this.message = 'Boilerplate Gulp';
     }
 
     insertMessageOnHTML() {
