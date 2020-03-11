@@ -1,21 +1,19 @@
 #home {
     height: 100vh;
     max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+    .logo {
+        width: 150px;
+        max-width: 100%;
+    }
 
     #welcome {
-        color: $colorPurple;
+        color: $colorGulp;
     }
 
     ul {
         width: 50%;
         padding-inline-start: 0;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
 
         li {
             list-style-type: none;

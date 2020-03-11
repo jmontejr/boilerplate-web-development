@@ -27,7 +27,12 @@ $ npm run lint:fix
 $ npm run clean
 ```
 
-### Executar o build e e ficar assistindo as alterações:
+### Remover o cache:
+```console
+$ npm run cache:clear
+```
+
+### Executar o build e ficar assistindo as alterações:
 ```console
 $ npm run dev
 ```

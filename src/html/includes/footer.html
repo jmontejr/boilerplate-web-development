@@ -1,0 +1,10 @@
+<script>
+    (function() {
+        const time = new Date().getTime();
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = `assets/js/index.min.js?version=${time}`;
+        const body = document.querySelector('body');
+        body.appendChild(script);
+    })();
+</script>

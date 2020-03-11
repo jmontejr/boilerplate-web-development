@@ -1,10 +1,10 @@
 @@include("./includes/head.html")
 
 <body>
-    <div id="home">
+    <div id="home" class="d-flex flex-column justify-content-center align-items-center">
         @@include("./includes/header.html")
 
-        <ul>
+        <ul class="d-flex justify-content-around align-items-center">
             @@loop("./includes/list.html", [
             {"item":"Gulp 4"},
             {"item":"Sass"},

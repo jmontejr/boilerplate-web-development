@@ -1,7 +1,6 @@
 const { src, dest, watch, series, parallel } = require('gulp');
 const fileinclude = require('gulp-file-include');
 const $ = require('gulp-load-plugins')();
-const { gifsicle, mozjpeg, optipng, svgo } = $.imagemin;
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const browserify = require('browserify');
@@ -24,10 +23,10 @@ const PATHS = {
             `${ INIT_PATH }/assets/scss/*/*.scss`,
         ]
     },
-    html: `${ INIT_PATH }/*.html`,
+    html: `${ INIT_PATH }/html/*.html`,
     include: [
-        `${ INIT_PATH }/includes/*/*.html`,
-        `${ INIT_PATH }/includes/*.html`,
+        `${ INIT_PATH }/html/includes/*/*.html`,
+        `${ INIT_PATH }/html/includes/*.html`,
     ],
     images: [
         `${ INIT_PATH }/assets/images/*/*/*.*`,
@@ -40,6 +39,9 @@ const PATHS = {
         `${ INIT_PATH }/assets/fonts/*.*`,
     ],
     scripts: [
+        './node_modules/tiny-slider/dist/tiny-slider.js',
+        './node_modules/jquery/dist/jquery.js',
+        // './node_modules/owl.carousel/dist/owl.carousel.js',
         `${ INIT_PATH }/assets/js/*/*.*.js`,
         `${ INIT_PATH }/assets/js/*/*.js`,
         `${ INIT_PATH }/assets/js/*.*.js`,
@@ -58,6 +60,11 @@ function cleanDist() {
     return src(DEST_PATH)
         .pipe($.clean());
 }
+
+// Clear cache
+function clearCache(done) {
+    return $.cache.clearAll(done);
+ }
 
 // Task functions
 function sass() {
@@ -90,10 +97,9 @@ function html() {
 function image() {
     return src(PATHS.images)
         .pipe($.cache($.imagemin([
-            gifsicle({ interlaced: true }),
-            mozjpeg({ quality: 75, progressive: true }),
-            optipng({ optimizationLevel: 5 }),
-            svgo({
+            $.imagemin.mozjpeg({ quality: 75, progressive: true }),
+            $.imagemin.optipng({ optimizationLevel: 5 }),
+            $.imagemin.svgo({
                 plugins: [
                     { removeViewBox: true },
                     { cleanupIDs: false }
@@ -131,6 +137,10 @@ function scripts() {
     return src(PATHS.scripts)
         .pipe($.concat('index.js'))
         .pipe($.rename({ suffix: '.min' }))
+        // .pipe($.sourcemaps.init())
+        // .pipe(uglify())
+        // .on('error', swallowError)
+        // .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
         .pipe(dest(`${ DEST_PATH }/assets/js`))
         .on('finish', transpileES);
 }
@@ -139,7 +149,7 @@ function scripts() {
 function watchFiles() {
     watch(PATHS.sass.watch, sass);
     watch(PATHS.images, image);
-    watch(PATHS.html, html);
+    watch([...PATHS.include, PATHS.html], html);
     watch(PATHS.scripts, scripts);
 }
 
@@ -152,7 +162,8 @@ const build = () => {
 
 // export tasks
 exports.clean = clean;
+exports.cache = series(clearCache);
 exports.watch = series(watchFiles);
 exports.dev = series(develop, watchFiles);
 exports.default = develop;
-exports.build = build();
+exports.build = series(clearCache, build());
