@@ -1,0 +1,5 @@
+<div class="slider mt-4">
+    @@for (var item = 0; item < items.length; item++) {
+        @@include("./slider_item.html", `+(JSON.stringify(items[item]))+`)
+    }
+</div>
