@@ -23,6 +23,10 @@ h3 {
     @include font-montserrat();
 }
 
+p {
+    @include font-lato();
+}
+
 ul {
     @include font-lato();
 }
