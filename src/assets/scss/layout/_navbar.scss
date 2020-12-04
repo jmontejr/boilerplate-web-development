@@ -1,0 +1,46 @@
+.navbar {
+    padding: 0.7rem 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background: $colorWhite;
+
+    &__logo {
+        text-decoration: none;
+        background: $colorMain;
+        padding: 0.5rem;
+        color: $colorWhite;
+    }
+
+    ul {
+        width: 100%;
+        padding-inline-start: 0;
+
+        @media(min-width: 768px) {
+            width: 200px;
+        }
+
+        li {
+            list-style-type: none;
+            flex-basis: 100%;
+            text-align: center;
+
+            @media(min-width: 768px) {
+                flex-basis: auto;
+            }
+
+            a {
+                color: lighten($color: $colorMain, $amount: 10%);
+                text-decoration: none;
+
+                &:hover {
+                    color: $colorMain;
+                }
+                &:active {
+                    color: lighten($color: $colorMain, $amount: 10%);
+                }
+            }
+        }
+    }
+}

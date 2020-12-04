@@ -1,23 +1,29 @@
-@@include("./includes/head.html")
+@@include("./layout/head.html")
 
 <body>
-    <div id="home" class="d-flex flex-column justify-content-center align-items-center">
-        @@include("./includes/header.html")
-
-        <ul class="d-flex justify-content-around align-items-center">
-            @@loop("./includes/list.html", [
-            {"item":"Gulp 4"},
-            {"item":"Sass"},
-            {"item":"Browserify"},
-            {"item":"Babelify"},
-            {"item":"ESLint"},
-            {"item":"Git Husky"}
-            ])
-        </ul>
-
-    </div>
+    <header>
+        @@include('./layout/navbar.html')
+    </header>
     
-    @@include("./includes/footer.html")
+    <main id="home" class="home d-flex flex-column justify-content-center align-items-center">
+        
+        <h2 class="mb-4" id="title"></h2>
+        <h3 class="mb-3">Nesse projeto estão sendo usados:</h3>
+
+        @@include("./components/slider.html", { "items": [
+        {"name": "gulp", "image": "./assets/images/misc/gulp.png"},
+        {"name": "babel", "image": "./assets/images/misc/babel.png"},
+        {"name": "browserify", "image": "./assets/images/misc/browserify.png"},
+        {"name": "sass", "image": "./assets/images/misc/sass.png"},
+        {"name": "bootstrap", "image": "./assets/images/misc/bootstrap.png"},
+        {"name": "eslint", "image": "./assets/images/misc/eslint.png"}
+        ]})
+
+        <p class="mt-5">e muito mais!</p>
+
+    </main>
+
+    @@include("./layout/footer.html")
 </body>
 
 </html>

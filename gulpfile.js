@@ -10,6 +10,7 @@ const buffer = require('vinyl-buffer');
 const composer = require('gulp-uglify/composer');
 const uglifyes = require('uglify-es');
 const uglify = composer(uglifyes, console);
+const browserSync = require('browser-sync').create();
 
 const pathExists = require('path-exists');
 const INIT_PATH = './src';
@@ -25,8 +26,10 @@ const PATHS = {
     },
     html: `${ INIT_PATH }/html/*.html`,
     include: [
-        `${ INIT_PATH }/html/includes/*/*.html`,
-        `${ INIT_PATH }/html/includes/*.html`,
+        `${ INIT_PATH }/html/components/*/*.html`,
+        `${ INIT_PATH }/html/components/*.html`,
+        `${ INIT_PATH }/html/layout/*/*.html`,
+        `${ INIT_PATH }/html/layout/*.html`,
     ],
     images: [
         `${ INIT_PATH }/assets/images/*/*/*.*`,
@@ -40,8 +43,6 @@ const PATHS = {
     ],
     scripts: [
         './node_modules/tiny-slider/dist/tiny-slider.js',
-        './node_modules/jquery/dist/jquery.js',
-        // './node_modules/owl.carousel/dist/owl.carousel.js',
         `${ INIT_PATH }/assets/js/*/*.*.js`,
         `${ INIT_PATH }/assets/js/*/*.js`,
         `${ INIT_PATH }/assets/js/*.*.js`,
@@ -64,7 +65,21 @@ function cleanDist() {
 // Clear cache
 function clearCache(done) {
     return $.cache.clearAll(done);
- }
+}
+
+function reload(done) {
+    browserSync.reload();
+    done();
+}
+
+function server(done) {
+    browserSync.init({
+      server: {
+        baseDir: DEST_PATH
+      },
+    });
+    done();
+}
 
 // Task functions
 function sass() {
@@ -120,7 +135,7 @@ function transpileES() {
         entries: [`${ DEST_PATH }/assets/js/index.min.js`]
     })
         .transform(babelify.configure({
-            presets: ['@babel/preset-env']
+            presets: ['@babel/env']
         }))
         .bundle()
         .on('error', swallowError)
@@ -137,20 +152,16 @@ function scripts() {
     return src(PATHS.scripts)
         .pipe($.concat('index.js'))
         .pipe($.rename({ suffix: '.min' }))
-        // .pipe($.sourcemaps.init())
-        // .pipe(uglify())
-        // .on('error', swallowError)
-        // .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
         .pipe(dest(`${ DEST_PATH }/assets/js`))
         .on('finish', transpileES);
 }
 
 // Watch files
 function watchFiles() {
-    watch(PATHS.sass.watch, sass);
-    watch(PATHS.images, image);
-    watch([...PATHS.include, PATHS.html], html);
-    watch(PATHS.scripts, scripts);
+    watch(PATHS.sass.watch, series(sass, reload));
+    watch(PATHS.images, series(image, reload));
+    watch([...PATHS.include, PATHS.html], series(html, reload));
+    watch(PATHS.scripts, series(scripts, reload));
 }
 
 // define complex tasks
@@ -164,6 +175,6 @@ const build = () => {
 exports.clean = clean;
 exports.cache = series(clearCache);
 exports.watch = series(watchFiles);
-exports.dev = series(develop, watchFiles);
+exports.dev = series(develop, server, watchFiles);
 exports.default = develop;
 exports.build = series(clearCache, build());

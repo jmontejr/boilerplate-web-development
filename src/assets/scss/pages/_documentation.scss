@@ -1,0 +1,99 @@
+#documentation {
+    margin-top: 8rem;
+    padding: 2rem;
+    
+    @media screen and (min-width: 768px) {
+        margin-top: 6rem;
+        padding: 2rem 5rem;
+    }
+
+    h2 {
+        @include font-montserrat();
+        color: $colorMain;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        @include font-montserrat();
+        margin-bottom: 1rem;
+    }
+
+    p {
+        @include font-lato();
+        margin-bottom: 1rem;
+        color: $colorDark;
+        text-align: justify;
+
+        a {
+            color: $colorMain;
+            text-decoration: none;
+        }
+    }
+
+    ul {
+        min-width: 100%;
+
+        @media(min-width: 768px) {
+            min-width: auto;
+        }
+
+        li {
+            list-style: none;
+            position: relative;
+            color: $colorDark;
+            text-align: justify;
+            margin: {
+                left: 10px;
+                bottom: 0.5rem;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                left: -10px;
+                top: 8px;
+                background: $colorMain;
+            }
+
+            a, span {
+                font-weight: 500;
+                color: $colorMain;
+            }
+            a {
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+    pre {
+
+        overflow: {
+            y: hidden;
+            x: scroll;
+        }
+        min-width: 100%;
+        font-family: monospace, monospace;
+        background: lighten($color: $colorDark, $amount: 10%);
+        white-space: nowrap;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+
+        @media(min-width: 768px) {
+            white-space: normal;
+            overflow-x: hidden;
+        }
+
+        code {
+            padding-top: 3rem;
+            display: block;
+            padding: 1rem;
+            word-wrap: normal;
+            color: $colorWhite;
+        }
+    }
+}

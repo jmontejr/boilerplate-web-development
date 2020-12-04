@@ -1,22 +1,26 @@
 @import 'abstracts/variables';
-@import 'abstracts/functions';
 @import 'abstracts/mixins';
+@import 'abstracts/functions';
 
+// @import 'vendors/bootstrap';
 @import 'node_modules/bootstrap/scss/bootstrap-grid.scss';
 @import 'node_modules/tiny-slider/src/tiny-slider.scss';
-// @import 'node_modules/owl.carousel/dist/assets/owl.carousel.css';
 
 @import 'base/reset';
 @import 'base/typography';
 
-@import 'layout/navigation';
-@import 'layout/grid';
-@import 'layout/header';
+@import 'layout/navbar';
 @import 'layout/footer';
-@import 'layout/forms';
 
-@import 'components/buttons';
-@import 'components/carousel';
+@import 'components/button';
+@import 'components/card';
+@import 'components/form';
+@import 'components/modal';
+@import 'components/table';;
 @import 'components/slider';
 
 @import 'pages/home';
+@import 'pages/documentation';
+
+@import 'themes/light';
+@import 'themes/dark'
