@@ -11,7 +11,7 @@ Basta acessar o diretório `src` que fica na raíz do projeto e começar a utili
 Abra um terminal de comandos na pasta onde deseja salvar o projeto e digite o comando abaixo:
 
 ```git
-$ git clone https://github.com/jmontejr/boilerplate-development-web
+$ git clone https://github.com/jmontejr/boilerplate-web-development
 ```
 
 Ou então voce pode baixar o arquivo comprimido diretamente do repositório do projeto no Github e descompactar onde desejar.
