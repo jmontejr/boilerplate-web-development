@@ -1,13 +1,13 @@
 {
-  "name": "boilerplate_gulp",
+  "name": "boilerplate_web_development",
   "version": "1.0.0",
-  "description": "Boilerplate using Gulp 4 to web development",
+  "description": "Boilerplate to web development",
   "main": "gulpfile.js",
   "scripts": {
     "lint": "eslint ./src/assets/js",
     "lint:fix": "eslint ./src/assets/js --fix",
     "clean": "gulp clean",
-    "cache:clear": "gulp cache",
+    "clean:cache": "gulp cache",
     "dev": "gulp dev",
     "prebuild": "npm run lint",
     "build": "gulp build"
@@ -21,20 +21,21 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jmontejr/boilerplate_gulp"
+    "url": "https://github.com/jmontejr/boilerplate-development-web"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "autoprefixer": "^9.7.4",
+    "babel-loader": "^8.1.0",
     "babelify": "^10.0.0",
     "bootstrap": "^4.4.1",
     "browserify": "^16.5.0",
+    "browser-sync": "^2.26.10",
     "cssnano": "^4.1.10",
     "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-cache": "^1.1.3",
-    "gulp-cached": "^1.1.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-file-include": "^2.1.1",
@@ -47,9 +48,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "husky": "^4.2.3",
-    "jquery": "^3.4.1",
     "tiny-slider": "^2.9.2",
-    "owl.carousel": "^2.3.4",
     "uglify-es": "^3.3.9",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"

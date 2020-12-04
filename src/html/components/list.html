@@ -1,0 +1,7 @@
+<li class="flex-grow-1 mb-2">
+    @@if(target) { <a target="@@target" href="@@link"> }
+    @@if(!target) { <a href="@@link"> }
+        @@if(icon) { <img style="width: 40px;" src="@@icon" alt="@@label icon"> }
+        @@if(!icon) { @@label }
+    </a>
+</li>
