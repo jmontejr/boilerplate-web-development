@@ -11,44 +11,8 @@ const composer = require('gulp-uglify/composer');
 const uglifyes = require('uglify-es');
 const uglify = composer(uglifyes, console);
 const browserSync = require('browser-sync').create();
-
 const pathExists = require('path-exists');
-const INIT_PATH = './src';
-const DEST_PATH = './docs';
-const SOURCE_MAP_PATH = '.'
-const PATHS = {
-    sass: {
-        task: `${ INIT_PATH }/assets/scss/style.scss`,
-        watch: [
-            `${ INIT_PATH }/assets/scss/*.scss`,
-            `${ INIT_PATH }/assets/scss/*/*.scss`,
-        ]
-    },
-    html: `${ INIT_PATH }/html/*.html`,
-    include: [
-        `${ INIT_PATH }/html/components/*/*.html`,
-        `${ INIT_PATH }/html/components/*.html`,
-        `${ INIT_PATH }/html/layout/*/*.html`,
-        `${ INIT_PATH }/html/layout/*.html`,
-    ],
-    images: [
-        `${ INIT_PATH }/assets/images/*/*/*.*`,
-        `${ INIT_PATH }/assets/images/*/*.*`,
-        `${ INIT_PATH }/assets/images/*.*`,
-    ],
-    fonts: [
-        `${ INIT_PATH }/assets/fonts/*/*.*.*`,
-        `${ INIT_PATH }/assets/fonts/*/*.*`,
-        `${ INIT_PATH }/assets/fonts/*.*`,
-    ],
-    scripts: [
-        './node_modules/tiny-slider/dist/tiny-slider.js',
-        `${ INIT_PATH }/assets/js/*/*.*.js`,
-        `${ INIT_PATH }/assets/js/*/*.js`,
-        `${ INIT_PATH }/assets/js/*.*.js`,
-        `${ INIT_PATH }/assets/js/*.js`,
-    ]
-};
+const { PATHS, SOURCE_MAP_PATH, DEST_PATH } = require('./paths');
 
 // Swallow error
 function swallowError(error) {
@@ -88,29 +52,29 @@ function sass() {
         cssnano()
     ];
 
-    return src(PATHS.sass.task)
+    return src(PATHS.sass.origin)
         .pipe($.sourcemaps.init())
         .pipe($.sass())
         .on('error', swallowError)
         .pipe($.postcss(plugins))
         .pipe($.rename({ suffix: '.min' }))
         .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
-        .pipe(dest(`${ DEST_PATH }/assets/css`));
+        .pipe(dest(PATHS.sass.dist));
 }
 
 function html() {
-    return src(PATHS.html)
+    return src(PATHS.html.origin)
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
         .pipe($.htmlmin({ collapseWhitespace: true }))
         .on('error', swallowError)
-        .pipe(dest(DEST_PATH));
+        .pipe(dest(PATHS.html.dist));
 }
 
 function image() {
-    return src(PATHS.images)
+    return src(PATHS.images.origin)
         .pipe($.cache($.imagemin([
             $.imagemin.mozjpeg({ quality: 75, progressive: true }),
             $.imagemin.optipng({ optimizationLevel: 5 }),
@@ -122,17 +86,17 @@ function image() {
             })
         ])))
         .on('error', swallowError)
-        .pipe(dest(`${ DEST_PATH }/assets/images`));
+        .pipe(dest(PATHS.images.dist));
 }
 
 function fonts() {
-    return src(PATHS.fonts)
-        .pipe(dest(`${ DEST_PATH }/assets/fonts`));
+    return src(PATHS.fonts.origin)
+        .pipe(dest(PATHS.fonts.dist));
 }
 
 function transpileES() {
     return browserify({
-        entries: [`${ DEST_PATH }/assets/js/index.min.js`]
+        entries: [PATHS.scripts.transpile]
     })
         .transform(babelify.configure({
             presets: ['@babel/env']
@@ -145,23 +109,23 @@ function transpileES() {
         .pipe(uglify())
         .on('error', swallowError)
         .pipe($.sourcemaps.write(SOURCE_MAP_PATH))
-        .pipe(dest(`${ DEST_PATH }/assets/js`));
+        .pipe(dest(PATHS.scripts.dist));
 }
 
 function scripts() {
-    return src(PATHS.scripts)
+    return src(PATHS.scripts.origin)
         .pipe($.concat('index.js'))
         .pipe($.rename({ suffix: '.min' }))
-        .pipe(dest(`${ DEST_PATH }/assets/js`))
+        .pipe(dest(PATHS.scripts.dist))
         .on('finish', transpileES);
 }
 
 // Watch files
 function watchFiles() {
     watch(PATHS.sass.watch, series(sass, reload));
-    watch(PATHS.images, series(image, reload));
-    watch([...PATHS.include, PATHS.html], series(html, reload));
-    watch(PATHS.scripts, series(scripts, reload));
+    watch(PATHS.images.origin, series(image, reload));
+    watch([...PATHS.html.include, PATHS.html.origin], series(html, reload));
+    watch(PATHS.scripts.origin, series(scripts, reload));
 }
 
 // define complex tasks
