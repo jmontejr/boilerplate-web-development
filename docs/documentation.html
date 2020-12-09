@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="x-ua-compatible" content="IE=edge"><title>Boilerplate Web Development</title><script>(function(document) {
+            'use strict';
+            
+            const time = new Date().getTime();
+            const style = document.createElement('link');
+            style.rel = 'stylesheet';
+            style.href= `assets/css/style.min.css?version=${time}`;
+            document.head.appendChild(style);
+
+        })(document)</script></head><body><header><div class="navbar mb-5 mb-sm-1 d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between px-3"><a class="navbar__logo mb-3 mb-sm-1" href="/"><h1>BWD</h1></a><ul class="d-flex justify-content-around align-items-center"><li class="flex-grow-1 mb-2"><a href="documentation.html">Documentação</a></li><li class="flex-grow-1 mb-2"><a target="_blank" href="https://github.com/jmontejr/boilerplate-web-development"><img style="width: 40px;" src="./assets/images/misc/github.png" alt="Github icon"></a></li></ul></div></header><main id="documentation" class="container"><div class="row"><div class="col-12"><h2>Documentação</h2><p>Com o avanço da tecnologia e da internet, a necessidade de otimização e da alta performance se tornaram fatores extramente importantes e de grande diferencial para quem desenvolve sites ou aplicações voltadas para a web.</p><p>Um projeto otimizado permite que um usuário acesse a sua aplicação mais rápido, tanto em computadores como em dispositivos móveis, que geralmente são mais fracos em poder de processamento. Com isso conseguimos que os usuários tenham uma experiência melhor.</p><h3>Este boilerplate utiliza:</h3><div class="mb-4 d-flex justify-content-between flex-wrap flex-sm-nowrap"><ul><li>Gulp 4</li><li>ESLint</li><li>Git Husky</li><li>Bootstrap 4</li><li>Tiny Slider 2</li></ul><ul><li>Babel (Babelify)</li><li>Browserify</li><li>gulp-uglify</li><li>gulp-sourcemaps</li></ul><ul><li>Sass (gulp-sass)</li><li>CSS nano</li><li>PostCSS (gulp-postcss)</li><li>Autoprefixer</li><li>Browser Sync</li></ul><ul><li>gulp-htmlmin</li><li>gulp-file-include</li><li>gulp-imagemin</li><li>gulp-cache</li></ul></div><h3>Porque usar</h3><p>Este boilerplate foi criado para facilitar a otimização e performance do desenvolvimento Web usando tecnologias como:</p><ul class="mb-4"><li><a href="https://gulpjs.com/" target="_blank">Gulp 4</a> - para a automação de tarefas maçantes como minificar códigos JavaScript e CSS, reduzir o tamanho das imagens além de fornecer a capacidade de modularizar o HTML através do plugin gulp-file-include</li><li><span>Sass</span> - permite explorar o CSS de formas incríveis, como a utilização de funções, mixins e a capacidade de modularização</li><li><span>PostCSS</span> e <span>Autoprefixer</span> - auxiliam para que o código CSS possa ser executado em diferentes navegadores</li><li><a href="https://eslint.org/" target="_blank">ESLint</a> - ajuda a manter uma padronização no seu código JavaScript</li><li><a href="http://browserify.org/" target="_blank">Browserify</a> - possibilita a modularização do JavaScript</li><li><a href="https://babeljs.io/" target="_blank">Babel</a> - realiza o transpile do seu código JavaScript para uma versão mais antiga e que seja suportada e executada nos navegadores mais antigos</li><li><a href="https://github.com/typicode/husky" target="_blank">Git Husky</a> - trás a possibilidade de padronizar e dar consistência aos seus commits.</li><li><a href="https://getbootstrap.com/docs/4.1/" target="_blank">Bootstrap</a> - a utilização do Bootstrap-grid, que na versão 4 dá suporte ao CSS Flexbox e Sass</li><li><a href="http://ganlanyuan.github.io/tiny-slider/" target="_blank">Tiny Slider 2</a> - carousel que utiliza JavaScript puro para ser executado sem precisar de dependências como o jQuery</li></ul><h3>Como baixar o projeto</h3><p>Abra um terminal de comandos na pasta onde deseja salvar o projeto e digite o comando abaixo:</p><pre>
+                        <code>
+                            $ git clone https://github.com/jmontejr/boilerplate-web-development
+                        </code>
+                    </pre><p>Você também pode baixar o arquivo comprimido clicando <a href="https://github.com/jmontejr/boilerplate-web-development/archive/master.zip">aqui</a> ou baixando diretamente do repositório do projeto no Github e descompactar onde desejar.</p><h3>Instalando as dependências</h3><p>Entre no diretório raíz do projeto e execute no terminal o comando abaixo:</p><pre>
+                    <code>
+                        $ npm install
+                    </code>
+                </pre><h3>Scripts de execução do projeto (npm scripts)</h3><p>Os comandos abaixo podem ser encontrados no arquivo <strong>package.json</strong> localizado na raíz do projeto.</p><p>Para executar os testes do ESLint execute no terminal o comando:</p><pre>
+                    <code>
+                        $ npm run lint
+                    </code>
+                </pre><p>Para corrigir os erros encontrados no teste do ESLint execute no terminal o comando:</p><pre>
+                    <code>
+                        $ npm run lint:fix
+                    </code>
+                </pre><p>Para remover o diretório dist (onde estão os arquivos de saída do build do projeto) execute no terminal o comando:</p><pre>
+                    <code>
+                        $ npm run clean
+                    </code>
+                </pre><p>Para remover o cache execute no terminal o comando:</p><pre>
+                    <code>
+                        $ npm run clean:cache
+                    </code>
+                </pre><p>Para executar o build e ficar assistindo as alterações em um servidor emulado pelo BrowserSync execute o comando:</p><pre>
+                    <code>
+                        $ npm run dev
+                    </code>
+                </pre><p>Para executar o build do projeto execute no terminal o comando</p><pre>
+                    <code>
+                        $ npm run build
+                    </code>
+                </pre></div></div><div class="d-flex flex-column justify-content-center align-items-center mt-5"><p><strong><a href="https://github.com/jmontejr">By José Monte</a></strong></p></div></main><script>(function(document) {
+        'use strict';
+
+        const time = new Date().getTime();
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = `assets/js/index.min.js?version=${time}`;
+        document.body.appendChild(script);
+        
+    })(document);</script></body></html>

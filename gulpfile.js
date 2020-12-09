@@ -14,7 +14,7 @@ const browserSync = require('browser-sync').create();
 
 const pathExists = require('path-exists');
 const INIT_PATH = './src';
-const DEST_PATH = './dist';
+const DEST_PATH = './docs';
 const SOURCE_MAP_PATH = '.'
 const PATHS = {
     sass: {

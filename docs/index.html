@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="x-ua-compatible" content="IE=edge"><title>Boilerplate Web Development</title><script>(function(document) {
+            'use strict';
+            
+            const time = new Date().getTime();
+            const style = document.createElement('link');
+            style.rel = 'stylesheet';
+            style.href= `assets/css/style.min.css?version=${time}`;
+            document.head.appendChild(style);
+
+        })(document)</script></head><body><header><div class="navbar mb-5 mb-sm-1 d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between px-3"><a class="navbar__logo mb-3 mb-sm-1" href="/"><h1>BWD</h1></a><ul class="d-flex justify-content-around align-items-center"><li class="flex-grow-1 mb-2"><a href="documentation.html">Documentação</a></li><li class="flex-grow-1 mb-2"><a target="_blank" href="https://github.com/jmontejr/boilerplate-web-development"><img style="width: 40px;" src="./assets/images/misc/github.png" alt="Github icon"></a></li></ul></div></header><main id="home" class="home d-flex flex-column justify-content-center align-items-center"><h2 class="mb-4" id="title"></h2><h3 class="mb-3">Nesse projeto estão sendo usados:</h3><div class="slider mt-4"><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/gulp.png" style="height: 80px; max-width: 100%;" alt="gulp logo"><h3>gulp</h3></div></div><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/babel.png" style="height: 80px; max-width: 100%;" alt="babel logo"><h3>babel</h3></div></div><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/browserify.png" style="height: 80px; max-width: 100%;" alt="browserify logo"><h3>browserify</h3></div></div><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/sass.png" style="height: 80px; max-width: 100%;" alt="sass logo"><h3>sass</h3></div></div><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/bootstrap.png" style="height: 80px; max-width: 100%;" alt="bootstrap logo"><h3>bootstrap</h3></div></div><div class="slider-item"><div class="d-flex flex-column align-items-center justify-content-center"><img src="./assets/images/misc/eslint.png" style="height: 80px; max-width: 100%;" alt="eslint logo"><h3>eslint</h3></div></div></div><p class="mt-5">e muito mais!</p></main><script>(function(document) {
+        'use strict';
+
+        const time = new Date().getTime();
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = `assets/js/index.min.js?version=${time}`;
+        document.body.appendChild(script);
+        
+    })(document);</script></body></html>
